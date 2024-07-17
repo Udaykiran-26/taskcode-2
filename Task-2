@@ -1,0 +1,76 @@
+def add_grades(grades_dict):
+    subject = input("Enter subject or assignment name: ")
+    grade = float(input(f"Enter grade for {subject}: "))
+    
+    if subject in grades_dict:
+        grades_dict[subject].append(grade)
+    else:
+        grades_dict[subject] = [grade]
+
+def calculate_average(grades_dict):
+    total_sum = 0
+    total_count = 0
+    
+    for subject, grades in grades_dict.items():
+        total_sum += sum(grades)
+        total_count += len(grades)
+    
+    if total_count == 0:
+        return None
+    
+    average_grade = total_sum / total_count
+    return average_grade
+
+def calculate_gpa(average_grade):
+    if average_grade is None:
+        return None
+    
+    if average_grade >= 90:
+        return "A"
+    elif average_grade >= 80:
+        return "B"
+    elif average_grade >= 70:
+        return "C"
+    elif average_grade >= 60:
+        return "D"
+    else:
+        return "F"
+
+def display_summary(grades_dict):
+    print("\nGrade Summary:")
+    for subject, grades in grades_dict.items():
+        print(f"{subject}: {grades}")
+    
+    average_grade = calculate_average(grades_dict)
+    if average_grade is not None:
+        print(f"\nAverage Grade: {average_grade:.2f}")
+        gpa = calculate_gpa(average_grade)
+        if gpa is not None:
+            print(f"GPA: {gpa}")
+    else:
+        print("\nNo grades entered yet.")
+
+def main():
+    grades_dict = {}
+    
+    while True:
+        print("\nOptions:")
+        print("1. Add Grades")
+        print("2. Display Grade Summary")
+        print("3. Exit")
+        
+        choice = input("Enter your choice (1/2/3): ")
+        
+        if choice == '1':
+            add_grades(grades_dict)
+        elif choice == '2':
+            display_summary(grades_dict)
+        elif choice == '3':
+            print("Exiting program.")
+            break
+        else:
+            print("Invalid choice. Please enter 1, 2, or 3.")
+
+if __name__ == "__main__":
+    print("Welcome to the Student Grade Tracker!")
+    main()
